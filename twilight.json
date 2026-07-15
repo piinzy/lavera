@@ -1528,6 +1528,216 @@
                     "maximum": 120
                 }
             ]
+        },
+        {
+            "key": "a4c8e2d6-9f1b-4e7a-b3c5-8d2f6a9e1c4b",
+            "title": {
+                "en": "Collection Tabs",
+                "ar": "تبويبات التصنيفات"
+            },
+            "icon": "sicon-layout-grid-rearrange",
+            "path": "home.collection-tabs",
+            "fields": [
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "static-desc",
+                    "value": "<div>اعرض منتجات عدة تصنيفات في مساحة واحدة — يتنقل الزائر بينها عبر تبويبات أنيقة دون مغادرة الصفحة</div>"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "عنوان القسم (اختياري)",
+                    "multilanguage": true,
+                    "id": "title",
+                    "value": null,
+                    "required": false,
+                    "format": "text",
+                    "placeholder": "مثال: تسوّقي حسب الفئة",
+                    "minLength": 0,
+                    "maxLength": 100
+                },
+                {
+                    "id": "tabs",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "minLength": 2,
+                    "maxLength": 4,
+                    "label": "التبويبات",
+                    "item_label": "تبويب",
+                    "fields": [
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "label": "اسم التبويب",
+                            "multilanguage": true,
+                            "id": "tabs.title",
+                            "value": null,
+                            "required": true,
+                            "format": "text",
+                            "placeholder": "مثال: فساتين",
+                            "minLength": 1,
+                            "maxLength": 40
+                        },
+                        {
+                            "type": "items",
+                            "label": "التصنيف",
+                            "id": "tabs.category",
+                            "format": "dropdown-list",
+                            "selected": [],
+                            "options": [],
+                            "required": true,
+                            "multichoice": false,
+                            "searchable": true,
+                            "source": "categories"
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-link",
+                            "label": "رابط عرض الكل (اختياري)",
+                            "id": "tabs.display_all_url",
+                            "value": null,
+                            "required": false,
+                            "format": "url",
+                            "inputType": "url",
+                            "placeholder": "e.g. https://salla.sa/store/category",
+                            "maxLength": "1000"
+                        }
+                    ]
+                },
+                {
+                    "id": "limit",
+                    "type": "number",
+                    "format": "integer",
+                    "label": "عدد المنتجات في كل تبويب",
+                    "icon": "sicon-pencil-ruler",
+                    "value": 8,
+                    "required": false,
+                    "minimum": 4,
+                    "maximum": 16
+                }
+            ]
+        },
+        {
+            "key": "f2b7d4a9-6e3c-4f8b-a1d7-5c9e2b8f4a6d",
+            "title": {
+                "en": "Editorial Image with Text",
+                "ar": "صورة مع نص (تحريري)"
+            },
+            "icon": "sicon-image",
+            "path": "home.image-with-text",
+            "fields": [
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "static-desc",
+                    "value": "<div>قسم بطابع المجلات: صورة كبيرة بجانب عنوان أنيق ونص وزر — مناسب لقصة العلامة أو إبراز مجموعة</div>"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "value": null,
+                    "id": "image",
+                    "label": "الصورة",
+                    "format": "image",
+                    "required": true,
+                    "placeholder": null,
+                    "description": "* المقاس المناسب 880×1100 بكسل"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "سطر تمهيدي صغير (اختياري)",
+                    "multilanguage": true,
+                    "id": "eyebrow",
+                    "value": null,
+                    "required": false,
+                    "format": "text",
+                    "placeholder": "مثال: قصتنا",
+                    "minLength": 0,
+                    "maxLength": 40
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "id": "title",
+                    "value": null,
+                    "required": true,
+                    "format": "text",
+                    "placeholder": "مثال: أناقة تُكتب بهدوء",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-typography",
+                    "label": "النص (اختياري)",
+                    "multilanguage": true,
+                    "id": "text",
+                    "value": null,
+                    "required": false,
+                    "format": "textarea",
+                    "placeholder": "اكتب وصفاً قصيراً هنا...",
+                    "minLength": 0,
+                    "maxLength": 500
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "نص الزر (اختياري)",
+                    "multilanguage": true,
+                    "id": "button_label",
+                    "value": null,
+                    "required": false,
+                    "format": "text",
+                    "placeholder": "مثال: اكتشفي المجموعة",
+                    "minLength": 0,
+                    "maxLength": 40
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-link",
+                    "label": "رابط الزر (اختياري)",
+                    "id": "button_url",
+                    "value": null,
+                    "required": false,
+                    "format": "url",
+                    "inputType": "url",
+                    "placeholder": "e.g. https://salla.sa",
+                    "maxLength": "1000"
+                },
+                {
+                    "id": "image_side",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "موضع الصورة (شاشات الكمبيوتر)",
+                    "icon": "sicon-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "بداية الصف",
+                            "value": "start",
+                            "key": "iwt-side-start"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "بداية الصف",
+                            "value": "start",
+                            "key": "iwt-side-start"
+                        },
+                        {
+                            "label": "نهاية الصف",
+                            "value": "end",
+                            "key": "iwt-side-end"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "support_url": "https://github.com/piinzy/lavera",

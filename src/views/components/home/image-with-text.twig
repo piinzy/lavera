@@ -1,0 +1,50 @@
+{#
+| Variable                  | Type    | Description                                                                  |
+|---------------------------|---------|------------------------------------------------------------------------------|
+| component                 | object  | Contains merchant settings for fields from twilight.json `component` section |
+| component.image           | string  | Image url                                                                    |
+| component.eyebrow         | ?string | small letter-spaced label above the title                                    |
+| component.title           | string  | serif heading                                                                |
+| component.text            | ?string |                                                                              |
+| component.button_label    | ?string |                                                                              |
+| component.button_url      | ?string |                                                                              |
+| component.image_side      | ?string | start | end — which side the image sits on (desktop)                        |
+| position                  | int     | Sorting number start from zero                                               |
+#}
+{% set image_side = component.image_side %}
+{% if image_side is iterable %}
+    {% set image_side = image_side|first %}
+    {% if image_side is iterable %}{% set image_side = image_side.value|default('start') %}{% endif %}
+{% endif %}
+{% set image_side = image_side|default('start') %}
+<section class="s-block s-block--image-with-text container">
+    <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-16">
+        <div class="image-with-text__media overflow-hidden bg-[#f5f5f5] {{ image_side == 'end' ? 'lg:order-2' : '' }}">
+            <img src="{{ component.image|cdn(880) }}"
+                 loading="lazy"
+                 alt="{{ (component.title is iterable ? component.title[user.language.code]|default(component.title|first) : component.title)|default('image') }}"
+                 class="w-full h-full object-cover aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5]">
+        </div>
+        <div class="image-with-text__content text-center lg:rtl:text-right lg:ltr:text-left px-2 sm:px-6 lg:px-0 {{ image_side == 'end' ? 'lg:order-1' : '' }}">
+            {% if component.eyebrow %}
+                <p class="text-xs tracking-editorial uppercase text-[#666666] mb-4">
+                    {{ (component.eyebrow is iterable ? component.eyebrow[user.language.code]|default(component.eyebrow|first) : component.eyebrow) }}
+                </p>
+            {% endif %}
+            <h2 class="font-heading text-3xl sm:text-4xl leading-tight mb-5" style="text-wrap: balance;">
+                {{ (component.title is iterable ? component.title[user.language.code]|default(component.title|first) : component.title) }}
+            </h2>
+            {% if component.text %}
+                <p class="text-[#666666] leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8">
+                    {{ (component.text is iterable ? component.text[user.language.code]|default(component.text|first) : component.text) }}
+                </p>
+            {% endif %}
+            {% if component.button_label and component.button_url %}
+                <a href="{{ component.button_url }}"
+                   class="inline-block border border-black px-10 py-3.5 text-sm uppercase tracking-editorial transition-colors duration-300 hover:bg-black hover:text-white">
+                    {{ (component.button_label is iterable ? component.button_label[user.language.code]|default(component.button_label|first) : component.button_label) }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>

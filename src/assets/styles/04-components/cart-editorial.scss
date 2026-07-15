@@ -1,0 +1,31 @@
+/* ─── Lavera: editorial cart ───
+   Quiet overrides on the cart page: shadowed rounded cards become
+   flat, sharp-cornered panels with a thin border, matching the rest
+   of the theme. Behaviour and layout are untouched. */
+.page-cart {
+  .cart-item,
+  #free-shipping,
+  #cart-gifting,
+  #cart-options,
+  .shadow-default {
+    @apply rounded-none shadow-none border border-border-thin;
+  }
+
+  .cart-item {
+    h1 a,
+    .item-price {
+      font-family: var(--font-heading);
+    }
+
+    img {
+      @apply rounded-none;
+    }
+  }
+
+  salla-cart-summary-card {
+    .s-cart-summary-card,
+    [class*='rounded'] {
+      @apply rounded-none;
+    }
+  }
+}

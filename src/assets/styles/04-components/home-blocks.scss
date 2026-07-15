@@ -500,3 +500,42 @@
 .lavera-spacing-spacious .s-block {
   @apply mt-12 sm:mt-24;
 }
+
+/* ─── Lavera: collection tabs ─── */
+.s-block--collection-tabs {
+  .collection-tabs__tab {
+    @apply opacity-50;
+
+    &::after {
+      content: '';
+      @apply absolute bottom-[-1px] h-[2px] bg-black transition-all duration-300;
+      inset-inline-start: 50%;
+      inset-inline-end: 50%;
+    }
+
+    &.is-active,
+    &:hover {
+      @apply opacity-100;
+    }
+
+    &.is-active::after {
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+    }
+  }
+}
+
+/* ─── Lavera: image with text ─── */
+.s-block--image-with-text {
+  .image-with-text__media img {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  &:hover .image-with-text__media img {
+    transform: scale(1.02);
+  }
+}
+
+.lavera-card-zoom-off .s-block--image-with-text:hover .image-with-text__media img {
+  transform: none;
+}

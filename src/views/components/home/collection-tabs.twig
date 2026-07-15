@@ -1,0 +1,69 @@
+{#
+| Variable                    | Type     | Description                                                                  |
+|-----------------------------|----------|------------------------------------------------------------------------------|
+| component                   | object   | Contains merchant settings for fields from twilight.json `component` section |
+| component.title             | ?string  | Section heading                                                              |
+| component.tabs              | object[] | list of tabs (max 4)                                                         |
+| component.tabs[].title      | string   | Tab label                                                                    |
+| component.tabs[].category   | int[]    | selected category id                                                         |
+| component.tabs[].display_all_url | ?string | optional "view all" url shown under the tab's slider                     |
+| component.limit             | ?int     | products per tab (default 8)                                                 |
+| position                    | int      | Sorting number start from zero                                               |
+#}
+{% set limit = component.limit|default(8) %}
+<section class="s-block s-block--collection-tabs container overflow-hidden" id="collection-tabs-{{ position }}">
+    {% if component.title %}
+        <h2 class="text-center font-heading text-2xl sm:text-3xl mb-6 sm:mb-8">
+            {{ (component.title is iterable ? component.title[user.language.code]|default(component.title|first) : component.title) }}
+        </h2>
+    {% endif %}
+
+    <div class="collection-tabs__bar flex justify-center gap-6 sm:gap-10 border-b border-border-thin mb-8 overflow-x-auto" role="tablist">
+        {% for tab in component.tabs %}
+            <button type="button"
+                    role="tab"
+                    id="ctab-{{ position }}-{{ loop.index }}"
+                    aria-controls="cpanel-{{ position }}-{{ loop.index }}"
+                    aria-selected="{{ loop.first ? 'true' : 'false' }}"
+                    class="collection-tabs__tab {{ loop.first ? 'is-active' : '' }} shrink-0 pb-3 font-heading text-base sm:text-lg text-inherit bg-transparent border-0 cursor-pointer relative transition-opacity"
+                    data-tab-target="cpanel-{{ position }}-{{ loop.index }}">
+                {{ (tab.title is iterable ? tab.title[user.language.code]|default(tab.title|first) : tab.title) }}
+            </button>
+        {% endfor %}
+    </div>
+
+    {% for tab in component.tabs %}
+        <div id="cpanel-{{ position }}-{{ loop.index }}"
+             role="tabpanel"
+             aria-labelledby="ctab-{{ position }}-{{ loop.index }}"
+             class="collection-tabs__panel {{ loop.first ? '' : 'hidden' }}">
+            <salla-products-slider
+                    source="categories"
+                    source-value="{{ tab.category is iterable ? tab.category|json_encode : '[' ~ tab.category ~ ']' }}"
+                    limit="{{ limit }}"
+                    display-all-url="{{ tab.display_all_url }}"
+                    slider-id="collection-tab-slider-{{ position }}-{{ loop.index }}"
+            ></salla-products-slider>
+        </div>
+    {% endfor %}
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('collection-tabs-{{ position }}');
+    if (!root) return;
+    root.querySelectorAll('.collection-tabs__tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        root.querySelectorAll('.collection-tabs__tab').forEach(function (t) {
+          t.classList.toggle('is-active', t === tab);
+          t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+        });
+        root.querySelectorAll('.collection-tabs__panel').forEach(function (p) {
+          p.classList.toggle('hidden', p.id !== tab.dataset.tabTarget);
+        });
+        // sliders measure themselves on init; nudge the newly shown one
+        window.dispatchEvent(new Event('resize'));
+      });
+    });
+  })();
+</script>
