@@ -1,0 +1,65 @@
+/* ─── Lavera: editorial product page ───
+   Scoped to .container--product-details so product.js behaviour
+   (read-more, options, sticky bar) is untouched. On the white canvas
+   the old white-on-gray panels get thin borders and sharp corners;
+   prices move to the heading serif. */
+.container--product-details {
+  .details-slider {
+    @apply rounded-none;
+
+    img {
+      @apply rounded-none;
+    }
+  }
+
+  .bg-white {
+    @apply rounded-none border border-border-thin;
+  }
+
+  /* price rows are emphasis, not panels — keep them borderless */
+  .price-wrapper,
+  .product__description {
+    @apply border-0;
+  }
+
+  .total-price,
+  .price_is_on_sale p,
+  .starting-or-normal-price p {
+    font-family: var(--font-heading);
+    @apply font-medium;
+  }
+
+  .text-sale {
+    color: var(--color-sale);
+  }
+
+  .product__description .article--main {
+    @apply text-[#555555] leading-relaxed;
+  }
+
+  salla-quantity-input {
+    input,
+    button,
+    [class*='s-quantity-input'] {
+      @apply rounded-none;
+    }
+  }
+
+  salla-add-product-button .s-button-element {
+    @apply rounded-none text-sm uppercase tracking-wider;
+  }
+
+  .btn--wishlist {
+    .s-button-element {
+      @apply rounded-none;
+    }
+  }
+}
+
+/* thumbnails under the gallery */
+.container--product-details [slot='thumbs'] img,
+.container--product-details .slide--one-fourth img {
+  @apply rounded-none;
+}
+
+/* reviews + related products headings inherit the serif via reset.scss */

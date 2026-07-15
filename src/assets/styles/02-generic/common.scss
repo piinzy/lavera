@@ -16,7 +16,8 @@ input[type="file"] {
 }
 
 body{
-  @apply bg-gray-50;
+  /* Lavera: editorial white canvas (Mimi) — panels get thin borders instead of sitting on gray */
+  @apply bg-white;
   [type='text'], [type='email'], [type='url'], [type='password'], [type='number'], [type='date'], [type='datetime-local'], [type='month'], [type='search'], [type='tel'], [type='time'], [type='week'], [multiple], textarea, select{
     @apply focus:ring-0;
   }

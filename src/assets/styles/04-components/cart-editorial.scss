@@ -29,3 +29,32 @@
     }
   }
 }
+
+/* ─── Lavera: editorial account pages ───
+   Scoped via .page-account on layouts/customer.twig — flattens the
+   sidebar and order panels to the same sharp thin-border language. */
+.page-account {
+  .sidebar {
+    @apply rounded-none;
+
+    &.lg\:shadow-default {
+      @media (min-width: 1024px) {
+        box-shadow: none;
+        @apply border border-border-thin;
+      }
+    }
+  }
+
+  table,
+  .rounded-md {
+    @apply rounded-none;
+  }
+
+  .bg-white {
+    @apply border border-border-thin;
+  }
+
+  .shadow-default {
+    box-shadow: none;
+  }
+}

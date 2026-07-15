@@ -539,3 +539,42 @@
 .lavera-card-zoom-off .s-block--image-with-text:hover .image-with-text__media img {
   transform: none;
 }
+
+/* ─── Lavera: editorial testimonials (pull-quote) ───
+   Applies to both salla-reviews (real store reviews) and the
+   custom-testimonials component — they share .s-reviews-* classes. */
+.s-block--testimonials {
+  .s-reviews-header {
+    font-family: var(--font-heading);
+    @apply text-2xl sm:text-3xl font-medium text-center;
+  }
+
+  .s-reviews-testimonial {
+    @apply rounded-none shadow-none border-0 bg-transparent;
+  }
+
+  .s-reviews-testimonial__inner {
+    @apply rounded-none shadow-none border border-border-thin bg-white p-8 sm:p-10;
+  }
+
+  .s-reviews-testimonial__text p {
+    font-family: var(--font-heading);
+    @apply text-lg sm:text-xl leading-relaxed text-[#333333];
+  }
+
+  .s-reviews-testimonial__info h2 {
+    @apply text-[13px] font-medium uppercase tracking-wider text-[#666666];
+  }
+
+  .s-reviews-testimonial__avatar img {
+    @apply rounded-full grayscale;
+  }
+
+  .s-reviews-testimonial__icon {
+    @apply opacity-15;
+
+    svg {
+      fill: currentColor;
+    }
+  }
+}
