@@ -161,7 +161,7 @@
   }
 
   .main-menu > li.root-level > a {
-    @apply font-heading text-[13px] uppercase tracking-editorial pb-6;
+    @apply font-heading text-[14px] tracking-wide pb-6;
   }
 
   .main-menu-row {
@@ -169,6 +169,11 @@
       @apply pt-0 mx-0;
     }
   }
+}
+
+/* uppercase variant — merchant toggle (suits latin menus) */
+.lavera-uppercase-nav .store-header--editorial .main-menu > li.root-level > a {
+  @apply text-[13px] uppercase tracking-editorial;
 }
 
 // Mainnav cart icon

@@ -27,6 +27,83 @@
         {
             "type": "static",
             "format": "title",
+            "id": "static-lavera-label",
+            "value": "<div class='rounded-lg' style='background-color: #111111; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>مظهر لافيرا</h6></div>",
+            "variant": "h6"
+        },
+        {
+            "type": "string",
+            "icon": "sicon-format-fill",
+            "label": "لون سعر التخفيض",
+            "id": "lavera_sale_color",
+            "value": "#e84e4e",
+            "required": false,
+            "format": "color",
+            "inputType": "color"
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "أحرف كبيرة متباعدة في القائمة الرئيسية",
+            "description": "طابع تحريري (Editorial) لروابط القائمة — للمتاجر باللغة الإنجليزية",
+            "id": "lavera_uppercase_nav",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": true
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "تكبير هادئ لصورة المنتج عند مرور المؤشر",
+            "description": null,
+            "id": "lavera_card_zoom",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": true
+        },
+        {
+            "id": "lavera_section_spacing",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "التباعد الرأسي بين أقسام الصفحة الرئيسية",
+            "icon": "sicon-list",
+            "source": "Manual",
+            "required": false,
+            "selected": [
+                {
+                    "label": "مريح (افتراضي)",
+                    "value": "comfortable",
+                    "key": "spacing-comfortable"
+                }
+            ],
+            "options": [
+                {
+                    "label": "متقارب",
+                    "value": "compact",
+                    "key": "spacing-compact"
+                },
+                {
+                    "label": "مريح (افتراضي)",
+                    "value": "comfortable",
+                    "key": "spacing-comfortable"
+                },
+                {
+                    "label": "واسع",
+                    "value": "spacious",
+                    "key": "spacing-spacious"
+                }
+            ]
+        },
+        {
+            "type": "static",
+            "id": "static-lavera-line",
+            "format": "line"
+        },
+        {
+            "type": "static",
+            "format": "title",
             "id": "static-fonts-label",
             "value": "<div class='rounded-lg' style='background-color: #111111; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>الخطوط (Google Fonts)</h6></div>",
             "variant": "h6"
@@ -327,6 +404,39 @@
                     "value": "<div >هذا العنصر غير مناسب لعرض البنرات، يمكنك استخدام عنصر <strong>صور متحركة</strong> بدلاً منه لتظهر صورة البنر بشكل كامل</div>"
                 },
                 {
+                    "id": "height",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "ارتفاع السلايدر",
+                    "icon": "sicon-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "كبير",
+                            "value": "large",
+                            "key": "hero-height-large"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "ملء الشاشة",
+                            "value": "full",
+                            "key": "hero-height-full"
+                        },
+                        {
+                            "label": "كبير",
+                            "value": "large",
+                            "key": "hero-height-large"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "medium",
+                            "key": "hero-height-medium"
+                        }
+                    ]
+                },
+                {
                     "id": "slides",
                     "type": "collection",
                     "format": "collection",
@@ -389,6 +499,76 @@
                             "placeholder": "يمكنك إضافة تفاصيل إضافية هنا",
                             "minLength": 0,
                             "maxLength": 255
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "id": "slides.mobile_image",
+                            "label": "صورة الجوال (اختياري)",
+                            "format": "image",
+                            "required": false,
+                            "placeholder": null,
+                            "description": "صورة مخصصة لشاشات الجوال — المقاس المناسب 750×1000 بكسل. عند تركها فارغة تُستخدم صورة البنر الأساسية"
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "label": "نص الزر (اختياري)",
+                            "multilanguage": true,
+                            "id": "slides.button_label",
+                            "value": null,
+                            "required": false,
+                            "format": "text",
+                            "description": "يظهر الزر فقط عند تعبئة النص والرابط معاً",
+                            "placeholder": "مثال: تسوّق الآن",
+                            "minLength": 0,
+                            "maxLength": 40
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-link",
+                            "label": "رابط الزر (اختياري)",
+                            "id": "slides.button_url",
+                            "value": null,
+                            "required": false,
+                            "format": "url",
+                            "inputType": "url",
+                            "placeholder": "e.g. https://salla.sa",
+                            "maxLength": "1000"
+                        },
+                        {
+                            "id": "slides.content_position",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "label": "موضع المحتوى",
+                            "icon": "sicon-list",
+                            "source": "Manual",
+                            "required": false,
+                            "selected": [
+                                {
+                                    "label": "المنتصف",
+                                    "value": "center",
+                                    "key": "slide-pos-center"
+                                }
+                            ],
+                            "options": [
+                                {
+                                    "label": "المنتصف",
+                                    "value": "center",
+                                    "key": "slide-pos-center"
+                                },
+                                {
+                                    "label": "بداية الصورة",
+                                    "value": "start",
+                                    "key": "slide-pos-start"
+                                },
+                                {
+                                    "label": "نهاية الصورة",
+                                    "value": "end",
+                                    "key": "slide-pos-end"
+                                }
+                            ]
                         },
                         {
                             "type": "boolean",
@@ -1246,6 +1426,106 @@
                             "maxLength": 4
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "key": "e7d2f8a1-3b5c-4d9e-8f1a-2c6b9e4d7a3f",
+            "title": {
+                "en": "Scrolling Promotion",
+                "ar": "شريط ترويجي متحرك"
+            },
+            "icon": "sicon-swap",
+            "path": "home.scrolling-promotion",
+            "fields": [
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "static-desc",
+                    "value": "<div>شريط نصوص متحرك بشكل مستمر — لمسة عصرية لإبراز العروض أو شعارات المتجر. يتوقف عند مرور المؤشر عليه</div>"
+                },
+                {
+                    "id": "items",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "minLength": 1,
+                    "maxLength": 8,
+                    "label": "النصوص",
+                    "item_label": "نص",
+                    "value": [
+                        {
+                            "items.text": "شحن مجاني للطلبات فوق ٢٠٠ ريال",
+                            "items.url": null
+                        },
+                        {
+                            "items.text": "تشكيلة الموسم الجديد وصلت",
+                            "items.url": null
+                        },
+                        {
+                            "items.text": "إرجاع مجاني خلال ١٤ يوم",
+                            "items.url": null
+                        }
+                    ],
+                    "fields": [
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "label": "النص",
+                            "multilanguage": true,
+                            "id": "items.text",
+                            "value": null,
+                            "required": true,
+                            "format": "text",
+                            "placeholder": "مثال: شحن مجاني للطلبات فوق ٢٠٠ ريال",
+                            "minLength": 1,
+                            "maxLength": 100
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-link",
+                            "label": "رابط (اختياري)",
+                            "id": "items.url",
+                            "value": null,
+                            "required": false,
+                            "format": "url",
+                            "inputType": "url",
+                            "placeholder": "e.g. https://salla.sa",
+                            "maxLength": "1000"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-fill",
+                    "label": "لون الخلفية",
+                    "id": "bg_color",
+                    "value": "#000000",
+                    "required": false,
+                    "format": "color",
+                    "inputType": "color"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-fill",
+                    "label": "لون النص",
+                    "id": "text_color",
+                    "value": "#ffffff",
+                    "required": false,
+                    "format": "color",
+                    "inputType": "color"
+                },
+                {
+                    "id": "speed",
+                    "type": "number",
+                    "format": "integer",
+                    "label": "مدة دورة الحركة (بالثواني)",
+                    "description": "كلما زاد الرقم كانت الحركة أهدأ — القيمة الافتراضية 30",
+                    "icon": "sicon-pencil-ruler",
+                    "value": 30,
+                    "required": false,
+                    "minimum": 10,
+                    "maximum": 120
                 }
             ]
         }

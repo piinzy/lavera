@@ -1,0 +1,34 @@
+{#
+| Variable               | Type     | Description                                                                  |
+|------------------------|----------|------------------------------------------------------------------------------|
+| component              | object   | Contains merchant settings for fields from twilight.json `component` section |
+| component.items        | object[] | list of scrolling texts                                                      |
+| component.items[].text | string   |                                                                              |
+| component.items[].url  | ?string  |                                                                              |
+| component.bg_color     | ?string  | background color (default black)                                             |
+| component.text_color   | ?string  | text color (default white)                                                   |
+| component.speed        | ?number  | seconds per loop (default 30, higher = slower)                               |
+| position               | int      | Sorting number start from zero                                               |
+#}
+{% set speed = component.speed|default(30) %}
+{% set bg = component.bg_color|default('#000000') %}
+{% set color = component.text_color|default('#ffffff') %}
+<section class="s-block s-block--scrolling-promotion s-block--full-bg wide-placeholder overflow-hidden"
+         style="background-color: {{ bg }}; color: {{ color }};">
+    <div class="marquee" style="--marquee-duration: {{ speed }}s;">
+        {# The track is duplicated so the loop is seamless; aria-hidden on the copy keeps screen readers clean #}
+        {% for copy in 0..1 %}
+            <div class="marquee__track" {{ copy ? 'aria-hidden="true"' : '' }}>
+                {% for item in component.items %}
+                    {% set item_text = (item.text is iterable ? item.text[user.language.code]|default(item.text|first) : item.text) %}
+                    {% if item.url %}
+                        <a href="{{ item.url }}" class="marquee__item hover:opacity-70 transition-opacity">{{ item_text }}</a>
+                    {% else %}
+                        <span class="marquee__item">{{ item_text }}</span>
+                    {% endif %}
+                    <span class="marquee__separator" aria-hidden="true">&#10022;</span>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</section>

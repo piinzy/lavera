@@ -95,15 +95,24 @@
             --color-primary-dark: {{ theme.color.darker(0.15) }};
             --color-primary-light: {{ theme.color.lighter(0.15) }};
             --color-primary-reverse: {{ theme.color.reverse_text }};
+            --color-sale: {{ theme.settings.get('lavera_sale_color', '#e84e4e') }};
         }
     </style>
     {# tracking services, custom css feature. #}
     {% hook 'head:end' %}
 </head>
-<body id="app" class="theme-raed overflow-x-hidden {% hook 'body:classes' %}
+{% set section_spacing = theme.settings.get('lavera_section_spacing', 'comfortable') %}
+{% if section_spacing is iterable %}
+    {% set section_spacing = section_spacing|first %}
+    {% if section_spacing is iterable %}{% set section_spacing = section_spacing.value|default('comfortable') %}{% endif %}
+{% endif %}
+<body id="app" class="theme-lavera overflow-x-hidden {% hook 'body:classes' %}
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
   {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
+  {{ theme.settings.get('lavera_uppercase_nav', true) ? ' lavera-uppercase-nav' : '' }}
+  {{ theme.settings.get('lavera_card_zoom', true) ? '' : ' lavera-card-zoom-off' }}
+  lavera-spacing-{{ section_spacing }}
   ">
 <noscript>
     To get full functionality of this site you need to enable JavaScript. Here is how

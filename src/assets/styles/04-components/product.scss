@@ -70,11 +70,83 @@
 
     &-starting-price{
       @apply w-auto;
-    } 
+    }
 
     &-content-title{
       word-break: break-word;
     }
+}
+
+/* ─── Lavera: editorial product card ───
+   Quiet, gallery-like: sharp corners, serif title, subtle image zoom,
+   sale price in the editorial red. All rules are overrides on top of
+   the twilight-tailwind card classes, so card behaviour is untouched. */
+.s-product-card-entry {
+  @apply rounded-none shadow-none border-0 bg-transparent;
+
+  .s-product-card-image,
+  .s-product-card-image-full {
+    @apply rounded-none overflow-hidden bg-[#f5f5f5];
+
+    img {
+      @apply rounded-none transition-transform duration-700 ease-out;
+    }
+  }
+
+  &:hover .s-product-card-image img {
+    transform: scale(1.03);
+  }
+
+  .s-product-card-content {
+    @apply px-0 pt-4 pb-0 bg-transparent;
+  }
+
+  .s-product-card-content-title {
+    a {
+      font-family: var(--font-heading);
+      @apply text-[15px] font-medium leading-snug text-[#222222] transition-opacity hover:opacity-70;
+    }
+  }
+
+  .s-product-card-price,
+  .s-product-card-sale-price h4,
+  .s-product-card-starting-price h4 {
+    @apply text-[15px] font-medium text-[#222222];
+  }
+
+  .s-product-card-sale-price {
+    h4 {
+      color: var(--color-sale);
+    }
+
+    span {
+      @apply text-[13px] text-[#999999] line-through;
+    }
+  }
+
+  .s-product-card-promotion-title {
+    @apply rounded-none bg-black text-white text-[11px] uppercase tracking-wider px-3 py-1;
+  }
+
+  .s-product-card-wishlist-btn {
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  &:hover .s-product-card-wishlist-btn,
+  .s-product-card-wishlist-btn.s-product-card-wishlist-added {
+    @apply opacity-100;
+  }
+
+  /* touch devices have no hover — keep wishlist reachable */
+  @media (hover: none) {
+    .s-product-card-wishlist-btn {
+      @apply opacity-100;
+    }
+  }
+
+  salla-add-product-button .s-button-element {
+    @apply rounded-none text-[13px] uppercase tracking-wider;
+  }
 }
 
 .pie-wrapper {

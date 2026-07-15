@@ -36,13 +36,8 @@ h6, .h6 {
   margin-bottom: 0px;
 }
 
-.font-heading {
-  font-family: var(--font-heading);
-}
-
-.tracking-editorial {
-  letter-spacing: 0.15em;
-}
+/* `font-heading` and `tracking-editorial` are Tailwind utilities
+   (see tailwind.config.js) — usable in twig and via @apply. */
 
 a {
   text-decoration: none;

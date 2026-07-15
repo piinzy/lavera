@@ -25,6 +25,9 @@ module.exports = {
             heading: "var(--font-heading)"
         },
         extend    : {
+            letterSpacing: {
+              'editorial': '0.15em',
+            },
             transitionTimingFunction: {
               'elastic': 'cubic-bezier(0.55, 0, 0.1, 1)',
             },

@@ -1,15 +1,33 @@
 {#
-| Variable                       | Type     | Description                                                                  |
-|--------------------------------|----------|------------------------------------------------------------------------------|
-| component                      | object   | Contains merchant settings for fields from twilight.json `component` section |
-| component.slides[].image       | string   | Image url                                                                    |
-| component.slides[].title       | ?string  |                                                                              |
-| component.slides[].description | ?string  |                                                                              |
-| component.slides               | object[] | list of slides                                                               |
-| position                       | int      | Sorting number start from zero                                               |
+| Variable                            | Type     | Description                                                                  |
+|-------------------------------------|----------|------------------------------------------------------------------------------|
+| component                           | object   | Contains merchant settings for fields from twilight.json `component` section |
+| component.slides                    | object[] | list of slides                                                               |
+| component.slides[].image            | string   | Desktop image url                                                            |
+| component.slides[].mobile_image     | ?string  | Mobile image url (falls back to desktop image)                               |
+| component.slides[].title            | ?string  |                                                                              |
+| component.slides[].description      | ?string  |                                                                              |
+| component.slides[].button_label     | ?string  | CTA label — button renders only when both label & url are set               |
+| component.slides[].button_url       | ?string  | CTA target url                                                               |
+| component.slides[].content_position | ?string  | center | start | end                                                         |
+| component.slides[].without_overlay  | bool     |                                                                              |
+| component.height                    | ?string  | full | large | medium                                                        |
+| position                            | int      | Sorting number start from zero                                               |
 #}
-<section class="s-block s-block--hero-slider s-block--full-bg wide-placeholder"> 
-    <salla-slider 
+{# items-dropdown values may arrive as a plain string or as a selected-options array #}
+{% set slider_height = component.height %}
+{% if slider_height is iterable %}
+    {% set slider_height = slider_height|first %}
+    {% if slider_height is iterable %}{% set slider_height = slider_height.value|default('large') %}{% endif %}
+{% endif %}
+{% set slider_height = slider_height|default('large') %}
+{% set height_classes = {
+    'full':   'min-h-[70vh] lg:min-h-[calc(100vh-160px)]',
+    'large':  'min-h-[420px] lg:min-h-[600px]',
+    'medium': 'min-h-[300px] lg:min-h-[460px]',
+} %}
+<section class="s-block s-block--hero-slider s-block--full-bg wide-placeholder">
+    <salla-slider
       id="main-slider-{{ position }}"
       auto-play
       static-when-single
@@ -18,16 +36,42 @@
       type="fullwidth">
         <div slot="items">
             {% for slide in component.slides %}
-                <div class="swiper-slide w-full min-h-[300px] lg:min-h-[528px] bg-dark relative">
-					<div style="background-image: url({{ slide.image }});" class="{{ slide.without_overlay ? '' : 'overlay-bg' }} bg-cover bg-center absolute inset-0"></div>
-                    <div class="flex-center container pb-16 sm:pb-0 home-slider__content relative h-full">
-                        <div class=" w-4/6 text-center md:w-7/12 lg:w-5/12 text-white">
-                            <h2 data-swiper-parallax="-500" class="lg:text-title-size font-bold leading-tight mb-4">{{ (slide.title is iterable ? slide.title[user.language.code]|default(slide.title|first) : slide.title) }}</h2>
-                            <p data-swiper-parallax="-300" class="line-clamp-2 description">{{ (slide.description is iterable ? slide.description[user.language.code]|default(slide.description|first) : slide.description) }}</p>
+                {% set content_position = slide.content_position %}
+                {% if content_position is iterable %}
+                    {% set content_position = content_position|first %}
+                    {% if content_position is iterable %}{% set content_position = content_position.value|default('center') %}{% endif %}
+                {% endif %}
+                {% set content_position = content_position|default('center') %}
+                <div class="swiper-slide w-full {{ height_classes[slider_height]|default(height_classes['large']) }} bg-dark relative">
+                    {# Desktop / mobile art direction: separate images per breakpoint #}
+                    <picture class="absolute inset-0 {{ slide.without_overlay ? '' : 'overlay-bg' }}">
+                        {% if slide.mobile_image %}
+                            <source media="(max-width: 767px)" srcset="{{ slide.mobile_image }}">
+                        {% endif %}
+                        <img src="{{ slide.image }}"
+                             alt="{{ (slide.title is iterable ? slide.title[user.language.code]|default(slide.title|first) : slide.title)|default('slide-' ~ loop.index) }}"
+                             {% if loop.first %}fetchpriority="high" loading="eager"{% else %}loading="lazy"{% endif %}
+                             class="w-full h-full object-cover">
+                    </picture>
+                    <div class="flex container pb-16 sm:pb-0 home-slider__content relative h-full items-center
+                                {{ content_position == 'start' ? 'justify-start' : (content_position == 'end' ? 'justify-end' : 'justify-center') }}">
+                        <div class="w-5/6 md:w-7/12 lg:w-5/12 text-white {{ content_position == 'center' ? 'text-center' : 'rtl:text-right ltr:text-left' }}">
+                            {% if slide.title %}
+                                <h2 data-swiper-parallax="-500" class="font-heading text-3xl lg:text-title-size font-medium leading-tight mb-4">{{ (slide.title is iterable ? slide.title[user.language.code]|default(slide.title|first) : slide.title) }}</h2>
+                            {% endif %}
+                            {% if slide.description %}
+                                <p data-swiper-parallax="-300" class="line-clamp-2 description">{{ (slide.description is iterable ? slide.description[user.language.code]|default(slide.description|first) : slide.description) }}</p>
+                            {% endif %}
+                            {% if slide.button_label and slide.button_url %}
+                                <a data-swiper-parallax="-200" href="{{ slide.button_url }}"
+                                   class="hero-cta inline-block mt-6 px-8 py-3 bg-white text-black text-sm uppercase tracking-editorial font-medium transition-colors duration-300 hover:bg-black hover:text-white">
+                                    {{ (slide.button_label is iterable ? slide.button_label[user.language.code]|default(slide.button_label|first) : slide.button_label) }}
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </salla-slider>
-</section> 
+</section>

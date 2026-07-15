@@ -427,3 +427,76 @@
     @apply mt-0 #{!important}
   }
 }
+/* ─── Lavera: scrolling promotion (marquee) ─── */
+.s-block--scrolling-promotion {
+  .marquee {
+    @apply flex w-max py-4 sm:py-5;
+    animation: lavera-marquee var(--marquee-duration, 30s) linear infinite;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
+
+  .marquee__track {
+    @apply flex items-center shrink-0;
+  }
+
+  .marquee__item {
+    @apply font-heading text-lg sm:text-2xl uppercase tracking-editorial whitespace-nowrap px-6 sm:px-10;
+    color: inherit;
+  }
+
+  .marquee__separator {
+    @apply text-sm opacity-60 select-none;
+  }
+}
+
+@keyframes lavera-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+[dir="rtl"] .s-block--scrolling-promotion .marquee {
+  animation-name: lavera-marquee-rtl;
+}
+
+@keyframes lavera-marquee-rtl {
+  from { transform: translateX(0); }
+  to   { transform: translateX(50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s-block--scrolling-promotion .marquee {
+    animation: none;
+    @apply w-full overflow-x-auto;
+  }
+}
+
+/* ─── Lavera: lookbook ─── */
+.s-block--lookbook {
+  .lookbook-look__image img {
+    @apply transition-transform duration-700;
+  }
+
+  .lookbook-look:hover .lookbook-look__image img {
+    transform: scale(1.04);
+  }
+}
+
+/* ─── Lavera: merchant toggles ─── */
+
+/* card zoom off */
+.lavera-card-zoom-off .s-product-card-entry:hover .s-product-card-image img,
+.lavera-card-zoom-off .s-block--lookbook .lookbook-look:hover .lookbook-look__image img {
+  transform: none;
+}
+
+/* homepage section vertical rhythm */
+.lavera-spacing-compact .s-block {
+  @apply mt-6 sm:mt-10;
+}
+
+.lavera-spacing-spacious .s-block {
+  @apply mt-12 sm:mt-24;
+}
