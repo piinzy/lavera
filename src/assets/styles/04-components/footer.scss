@@ -1,0 +1,49 @@
+
+.store-footer {
+  @apply relative bg-darker text-white mt-8 sm:mt-16;
+
+  a{
+    @apply transition-opacity hover:opacity-75;
+  }
+
+  &__inner{
+    @apply bg-dark py-10 lg:py-20 border-b border-b-white/10;
+  }
+
+  h3{
+    @apply font-heading text-sm font-medium uppercase tracking-editorial mb-4 lg:mb-6;
+  }
+
+  .social-link {
+    @apply border rounded-none w-8 h-8 justify-center flex items-center hover:opacity-75 transition duration-300 text-sm
+  }
+
+  .contact-social{
+    @apply mt-5 pt-5 border-t border-white/10;
+
+    ul {
+      @apply mb-0;
+    }
+  }
+
+  .footer-is-light & {
+    @apply bg-white text-[#222222];
+
+    .store-footer__inner {
+      @apply bg-[#f5f5f5] border-b-[#dedede];
+    }
+
+    .social-link {
+      @apply border-[#dedede];
+    }
+
+    .contact-social{
+      @apply border-[#dedede];
+    }
+  }
+}
+
+
+.copyright-text p{
+  @apply text-[13px] tracking-wide text-[#666666];
+}

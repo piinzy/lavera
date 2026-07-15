@@ -1,0 +1,51 @@
+{#
+| Variable                          | Type     | Description                                                                  |
+|------------------------------------|----------|------------------------------------------------------------------------------|
+| component                         | object   | Contains merchant settings for fields from twilight.json `component` section |
+| component.title                   | ?string  |                                                                              |
+| component.looks                   | object[] | list of looks                                                                |
+| component.looks[].image           | string   |                                                                              |
+| component.looks[].title           | ?string  |                                                                              |
+| component.looks[].products        | Product[]| linked products for this look                                               |
+| position                          | int      | Sorting number start from zero                                               |
+#}
+
+<section class="s-block s-block--lookbook container py-8 sm:py-16">
+    {% if component.title %}
+        <h2 class="text-center font-heading text-2xl sm:text-3xl mb-8 sm:mb-12">
+            {{ (component.title is iterable ? component.title[user.language.code]|default(component.title|first) : component.title) }}
+        </h2>
+    {% endif %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-{{ component.looks|length >= 3 ? 3 : component.looks|length }} gap-8 lg:gap-10">
+        {% for look in component.looks %}
+            <article class="lookbook-look">
+                <div class="lookbook-look__image relative overflow-hidden aspect-[3/4] bg-[#f5f5f5]">
+                    <img src="{{ look.image|cdn(640) }}"
+                         loading="lazy"
+                         class="w-full h-full object-cover"
+                         alt="{{ (look.title is iterable ? look.title[user.language.code]|default(look.title|first) : look.title)|default('lookbook') }}">
+                </div>
+
+                {% if look.title %}
+                    <h3 class="font-heading text-lg mt-4 mb-2">
+                        {{ (look.title is iterable ? look.title[user.language.code]|default(look.title|first) : look.title) }}
+                    </h3>
+                {% endif %}
+
+                {% if look.products|length %}
+                    <ul class="lookbook-look__products flex flex-col divide-y divide-border-thin border-t border-b border-border-thin mt-3">
+                        {% for product in look.products %}
+                            <li>
+                                <a href="{{ product.url }}" class="flex items-center justify-between py-2.5 text-sm hover:opacity-70 transition-opacity">
+                                    <span class="truncate rtl:ml-2 ltr:mr-2">{{ (product.name is iterable ? product.name[user.language.code]|default(product.name|first) : product.name) }}</span>
+                                    <span class="whitespace-nowrap font-medium">{{ product.price|money }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+</section>

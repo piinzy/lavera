@@ -1,0 +1,80 @@
+{#
+| Variable         | Type    | Description                     |
+|------------------|---------|---------------------------------|
+| cart             | object  |                                 |
+| cart.items_count | int     |                                 |
+| cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
+#}
+{% set important_links = theme.settings.get('important_links') %}
+<header class="store-header store-header--editorial">
+  {# Top Nav — thin utility bar #}
+  <div class="top-navbar border-b border-border-thin text-xs">
+    <div class="container flex justify-between items-center">
+      <div class="flex-1 flex items-center gap-2">
+          {# Footer Menu #}
+          {% if important_links %}
+            <salla-menu source="footer" topnav></salla-menu>
+          {% endif %}
+
+          {# Language & Currency Component #}
+          <div class="header-buttons">
+              {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                  <salla-localization-modal show-trigger></salla-localization-modal>
+              {% endif %}
+          </div>
+
+          {# Scopes | Branches #}
+          {% if store.scope %}
+              <button class="btn--rounded-gray"
+                      onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
+                  <i class="sicon-location rtl:ml-1 ltr:mr-1"></i> {{ (store.scope.name is iterable ? store.scope.name[user.language.code]|default(store.scope.name|first) : store.scope.name) }}
+              </button>
+          {% endif %}
+      </div>
+
+      <salla-contacts is-header></salla-contacts>
+    </div>
+  </div>
+
+  {# Main Nav — centered logo #}
+  <div id="mainnav" class="main-nav-container bg-white flex items-center">
+      <div class="inner bg-inherit w-full">
+          <div class="container">
+              <div class="grid grid-cols-3 items-center py-5 relative">
+                  {# Left: mobile toggle + search #}
+                  <div class="flex items-center gap-3 justify-start">
+                      <a class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu" aria-label="Open-menu">
+                        <i class="sicon-menu text-primary text-2xl"></i>
+                      </a>
+                      <div class="header-search hidden lg:block max-w-[220px]">
+                        <salla-search inline oval height="36"></salla-search>
+                      </div>
+                  </div>
+
+                  {# Center: logo (uppercase serif wordmark feel) #}
+                  <a class="navbar-brand navbar-brand--center justify-center" href="{{ store.url }}">
+                      <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(175) }}" alt="{{ (store.name is iterable ? store.name[user.language.code]|default(store.name|first) : store.name) }} logo">
+                      {% if is_page('index') %}
+                        <h1 class="sr-only">{{ (store.name is iterable ? store.name[user.language.code]|default(store.name|first) : store.name) }}</h1>
+                      {% else %}
+                        <h2 class="sr-only">{{ (store.name is iterable ? store.name[user.language.code]|default(store.name|first) : store.name) }}</h2>
+                      {% endif %}
+                  </a>
+
+                  {# Right: account + cart #}
+                  <div class="flex items-center justify-end gap-1 my-2.5">
+                      <salla-user-menu avatar-only show-header show-trigger></salla-user-menu>
+                      <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4">
+                        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+                      </salla-cart-summary>
+                  </div>
+              </div>
+
+              {# Nav links row — centered, uppercase, letter-spaced #}
+              <div class="main-menu-row hidden lg:flex justify-center border-t border-border-thin">
+                  <custom-main-menu></custom-main-menu>
+              </div>
+          </div>
+      </div>
+  </div>
+</header>

@@ -1,0 +1,34 @@
+
+// Colors — Lavera editorial palette (inspired by Impression/Mimi)
+$main-color: var(--color-primary);
+$infinte-color: var(--infinte-color);
+$main-text-color: var(--main-text-color);
+
+:root {
+  --infinte-color: #c9c9c9;
+  --main-text-color: #222222;
+  --main-text-color-dark: #222222;
+
+  /* brand */
+  --color-primary: #000000;
+  --color-primary-d: #000000;
+  --color-primary-l: #333333;
+  --color-primary-reverse: #ffffff;
+  --color-text: #666666;
+  --color-sale: #e84e4e;
+  --bg-gray: #f5f5f5;
+  --color-grey: #f5f5f5;
+  --color-light-grey: #eeeeee;
+  --color-border: #eeeeee;
+
+  /* radius — sharp editorial corners everywhere */
+  --radius-btn: 0px;
+  --radius-card: 0px;
+  --radius-input: 0px;
+
+  /* font-size */
+  --font-sm: 0.8685714286rem;
+
+  /* plugins */
+  --mm-ocd-width: calc(100% - 51px);
+}
