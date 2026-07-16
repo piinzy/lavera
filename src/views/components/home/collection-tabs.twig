@@ -37,9 +37,12 @@
              role="tabpanel"
              aria-labelledby="ctab-{{ position }}-{{ loop.index }}"
              class="collection-tabs__panel {{ loop.first ? '' : 'hidden' }}">
+            {# category may arrive as an id, an array of ids, or selected-option objects — normalize to an id array #}
+            {% set category_ids = tab.category is iterable ? tab.category : [tab.category] %}
+            {% set category_ids = category_ids|map(c => c.value|default(c)) %}
             <salla-products-slider
                     source="categories"
-                    source-value="{{ tab.category is iterable ? tab.category|json_encode : '[' ~ tab.category ~ ']' }}"
+                    source-value="{{ category_ids|json_encode }}"
                     limit="{{ limit }}"
                     display-all-url="{{ tab.display_all_url }}"
                     slider-id="collection-tab-slider-{{ position }}-{{ loop.index }}"

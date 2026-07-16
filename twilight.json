@@ -113,7 +113,7 @@
             "type": "string",
             "format": "text",
             "label": "خط العناوين",
-            "description": "اسم خط من Google Fonts، استبدل المسافات بعلامة +",
+            "description": "اسم خط من Google Fonts كما هو (المسافات مقبولة)، مثال: Cormorant Garamond",
             "icon": "sicon-format-text-alt",
             "value": "Cormorant+Garamond",
             "required": false
@@ -123,7 +123,7 @@
             "type": "string",
             "format": "text",
             "label": "خط النصوص",
-            "description": "اسم خط من Google Fonts، استبدل المسافات بعلامة +",
+            "description": "اسم خط من Google Fonts كما هو (المسافات مقبولة)، مثال: Cormorant Garamond",
             "icon": "sicon-format-text-alt",
             "value": "Markazi+Text",
             "required": false

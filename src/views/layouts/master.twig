@@ -79,8 +79,9 @@
     {% hook 'head:start' %}
     {% hook head %}
     {% block styles %}{% endblock %}
-    {% set heading_font = theme.settings.get('heading_font', 'Cormorant+Garamond') %}
-    {% set body_font = theme.settings.get('body_font', 'Markazi+Text') %}
+    {# spaces are fine in the setting — normalized to '+' for the fonts URL #}
+    {% set heading_font = theme.settings.get('heading_font', 'Cormorant+Garamond')|trim|replace({' ': '+'}) %}
+    {% set body_font = theme.settings.get('body_font', 'Markazi+Text')|trim|replace({' ': '+'}) %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={{ heading_font }}:wght@400;500;600;700&family={{ body_font }}:wght@400;500;600;700&display=swap">

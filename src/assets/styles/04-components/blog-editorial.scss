@@ -1,0 +1,101 @@
+/* ─── Lavera: editorial blog ───
+   Post cards become quiet bordered tiles with a soft image zoom;
+   the article page reads like a magazine piece. Selectors target the
+   existing blog twig classes only — no markup changes. */
+
+/* blog index cards */
+.post-entry {
+  @apply rounded-none border border-border-thin;
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  .post-thumbnail,
+  img {
+    @apply rounded-none;
+  }
+
+  a > img,
+  .post-image img {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  &:hover a > img,
+  &:hover .post-image img {
+    transform: scale(1.03);
+  }
+
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    @apply font-medium;
+  }
+}
+
+.lavera-card-zoom-off .post-entry:hover a > img,
+.lavera-card-zoom-off .post-entry:hover .post-image img {
+  transform: none;
+}
+
+/* article page */
+.blog-category {
+  @apply rounded-none;
+
+  &.bg-white {
+    @apply border-0; /* article body is prose, not a panel */
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    @apply font-medium;
+    text-wrap: balance;
+  }
+
+  article,
+  .article--main {
+    @apply leading-loose text-[#444444];
+
+    img {
+      @apply rounded-none;
+    }
+
+    blockquote {
+      font-family: var(--font-heading);
+      @apply text-xl leading-relaxed text-[#222222] border-0 relative px-8 py-2 my-8;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 0;
+        width: 2px;
+        background: #222222;
+      }
+    }
+  }
+}
+
+/* static pages (about, policies, FAQ) */
+.content--single-page {
+  @apply rounded-none border-0;
+
+  h1 {
+    font-family: var(--font-heading);
+    @apply font-medium text-3xl;
+    text-wrap: balance;
+  }
+
+  .content-entry {
+    @apply leading-loose text-[#444444];
+
+    h2, h3, h4 {
+      font-family: var(--font-heading);
+      @apply font-medium text-[#222222] mt-8 mb-3;
+    }
+
+    img {
+      @apply rounded-none;
+    }
+  }
+}
